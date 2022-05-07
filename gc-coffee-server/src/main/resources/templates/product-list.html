@@ -20,7 +20,7 @@
 <table class="table table-hover table-striped">
     <thead>
     <tr>
-        <th scope="col">Id</th>
+        <th scope="col">productId</th>
         <th scope="col">Name</th>
         <th scope="col">Category</th>
         <th scope="col">Price</th>
@@ -32,7 +32,7 @@
     </thead>
     <tbody>
     <tr th:each="product: ${products}" th:object="${product}">
-        <td><a href="#" th:href="@{/products/{id}(id=${product.id})}" th:text="${product.id}"></a></td>
+        <td><a href="#" th:href="@{/products/{id}(id=${product.productId})}" th:text="${product.productId}"></a></td>
         <td th:text="*{name}"></td>
         <td th:text="*{category}"></td>
         <td th:text="*{price}"></td>
@@ -41,7 +41,7 @@
         <td th:text="*{updatedAt}"></td>
         <td>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <form method="post" th:action="@{/products/{id}(id=${product.id})}">
+                <form method="post" th:action="@{/products/{productId}(productId=${product.productId})}">
                     <input name="_method" type="hidden" value="delete"/>
                     <button class="btn btn-primary me-md-2" id="delete-btn">삭제</button>
                 </form>
