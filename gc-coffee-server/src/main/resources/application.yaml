@@ -3,3 +3,8 @@ spring:
     url: jdbc:mysql://localhost:3306/gc_coffee
     username: root
     password: xkakak142
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

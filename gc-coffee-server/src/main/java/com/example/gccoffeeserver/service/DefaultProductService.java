@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DefaultProductService implements ProductService {
@@ -26,6 +27,11 @@ public class DefaultProductService implements ProductService {
     @Override
     public Optional<Product> getProductByName(String name) {
         return productRepository.findByName(name);
+    }
+
+    @Override
+    public Optional<Product> getProductById(UUID id) {
+        return productRepository.findById(id);
     }
 
     @Override
@@ -48,5 +54,21 @@ public class DefaultProductService implements ProductService {
             return product;
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<Product> updateProductProperties(UUID id, String name, Category category, Long price, String description) {
+        var product = productRepository.findById(id);
+        if (product.isPresent()) {
+            product.get().updateProductProperties(name, category, price, description);
+            productRepository.update(product.get());
+            return product;
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void removeProductById(UUID id) {
+        productRepository.deleteById(id);
     }
 }
