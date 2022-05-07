@@ -7,12 +7,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.testcontainers.shaded.org.hamcrest.beans.SamePropertyValuesAs;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -32,7 +28,7 @@ class ProductJdbcRepositoryTest extends MySqlContainerInitializer {
     void testFindById() {
         Product product = new Product("coffee-bean", Category.COFFEE_BEAN, 5000, "산미 가득한 원두");
         productRepository.insert(product);
-        Product findObject = productRepository.findById(product.getId()).get();
+        Product findObject = productRepository.findById(product.getProductId()).get();
         assertThat(product, samePropertyValuesAs(findObject));
     }
 
@@ -89,7 +85,7 @@ class ProductJdbcRepositoryTest extends MySqlContainerInitializer {
 
         product.updateProductProperties("java-bean", product.getCategory(), product.getPrice(), product.getDescription());
         productRepository.update(product);
-        var update = productRepository.findById(product.getId()).get();
+        var update = productRepository.findById(product.getProductId()).get();
         assertThat(update.getName(), is("java-bean"));
     }
 
@@ -110,8 +106,8 @@ class ProductJdbcRepositoryTest extends MySqlContainerInitializer {
     void testDeleteById() {
         Product product = new Product("coffee-bean", Category.COFFEE_BEAN, 5000, "산미 가득한 원두");
         productRepository.insert(product);
-        productRepository.deleteById(product.getId());
-        var find = productRepository.findById(product.getId());
+        productRepository.deleteById(product.getProductId());
+        var find = productRepository.findById(product.getProductId());
         assertThat(find.isEmpty(), is(true));
     }
 }

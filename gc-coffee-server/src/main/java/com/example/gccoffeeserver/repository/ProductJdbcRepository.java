@@ -27,10 +27,10 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findById(UUID id) {
+    public Optional<Product> findById(UUID productId) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject("select * from products where id = UUID_TO_BIN(:id)",
-                    Map.of("id", id.toString().getBytes()), productRowMapper));
+            return Optional.ofNullable(jdbcTemplate.queryForObject("select * from products where product_id = UUID_TO_BIN(:productId)",
+                    Map.of("productId", productId.toString().getBytes()), productRowMapper));
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Empty object was returned while findById Method");
             return Optional.empty();
@@ -38,10 +38,10 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findByName(String name) {
+    public Optional<Product> findByName(String productName) {
         try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject("select * from products where name = :name",
-                    Map.of("name", name), productRowMapper));
+            return Optional.ofNullable(jdbcTemplate.queryForObject("select * from products where product_name = :productName",
+                    Map.of("productName", productName), productRowMapper));
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Empty object was returned while findByName Method");
             return Optional.empty();
@@ -62,8 +62,8 @@ public class ProductJdbcRepository implements ProductRepository {
 
     @Override
     public Product insert(Product product) {
-        Integer result = jdbcTemplate.update("INSERT INTO products(id, name, category, price, description, created_at, updated_at) " +
-                "VALUES (UUID_TO_BIN(:id), :name, :category, :price, :description, :createdAt, :updatedAt)", toParamMap(product));
+        Integer result = jdbcTemplate.update("INSERT INTO products(product_id, product_name, category, price, description, created_at, updated_at) " +
+                "VALUES (UUID_TO_BIN(:productId), :productName, :category, :price, :description, :createdAt, :updatedAt)", toParamMap(product));
         if (!result.equals(SUCCESSFULLY_UPDATE_ONE_ROW)) {
             logger.error("Failed to create product");
             throw new RuntimeException("Nothing was inserted");
@@ -73,7 +73,7 @@ public class ProductJdbcRepository implements ProductRepository {
 
     @Override
     public Product update(Product product) {
-        Integer update = jdbcTemplate.update("UPDATE products SET name = :name, category = :category, price = :price, description = :description WHERE id = UUID_TO_BIN(:id)",
+        Integer update = jdbcTemplate.update("UPDATE products SET product_name = :productName, category = :category, price = :price, description = :description WHERE product_id = UUID_TO_BIN(:productId)",
                 toParamMap(product));
         if (!update.equals(SUCCESSFULLY_UPDATE_ONE_ROW)) {
             logger.error("Failed to update product");
@@ -88,9 +88,9 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     @Override
-    public void deleteById(UUID id) {
-        Integer delete = jdbcTemplate.update("DELETE FROM products WHERE id = UUID_TO_BIN(:id)",
-                Map.of("id", id.toString().getBytes()));
+    public void deleteById(UUID productId) {
+        Integer delete = jdbcTemplate.update("DELETE FROM products WHERE product_id = UUID_TO_BIN(:productId)",
+                Map.of("productId", productId.toString().getBytes()));
         if (!delete.equals(SUCCESSFULLY_UPDATE_ONE_ROW)) {
             logger.error("Failed to delete product");
             throw new RuntimeException("Nothing was deleted");
@@ -98,8 +98,8 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     private static final RowMapper<Product> productRowMapper = (resultSet, i) -> {
-        var productId = toUUID(resultSet.getBytes("id"));
-        var productName = resultSet.getString("name");
+        var productId = toUUID(resultSet.getBytes("product_id"));
+        var productName = resultSet.getString("product_name");
         var category = Category.valueOf(resultSet.getString("category"));
         var price = resultSet.getLong("price");
         var description = resultSet.getString("description");
@@ -110,8 +110,8 @@ public class ProductJdbcRepository implements ProductRepository {
 
     private Map<String, Object> toParamMap(Product product) {
         var paramMap = new HashMap<String, Object>();
-        paramMap.put("id", product.getId().toString().getBytes());
-        paramMap.put("name", product.getName());
+        paramMap.put("productId", product.getProductId().toString().getBytes());
+        paramMap.put("productName", product.getName());
         paramMap.put("category", product.getCategory().toString());
         paramMap.put("price", product.getPrice());
         paramMap.put("description", product.getDescription());

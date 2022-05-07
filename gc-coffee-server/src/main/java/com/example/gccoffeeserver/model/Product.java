@@ -5,7 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 public class Product {
-    private final UUID id;
+    private final UUID productId;
     private String name;
     private Category category;
     private long price;
@@ -13,8 +13,8 @@ public class Product {
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product(UUID id, String name, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public Product(UUID productId, String name, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.productId = productId;
         this.name = name;
         this.category = category;
         this.price = price;
@@ -24,7 +24,7 @@ public class Product {
     }
 
     public Product(String name, Category category, long price) {
-        this.id = UUID.randomUUID();
+        this.productId = UUID.randomUUID();
         this.name = name;
         this.category = category;
         this.price = price;
@@ -34,7 +34,7 @@ public class Product {
     }
 
     public Product(String name, Category category, long price, String description) {
-        this.id = UUID.randomUUID();
+        this.productId = UUID.randomUUID();
         this.name = name;
         this.category = category;
         this.price = price;
@@ -43,8 +43,8 @@ public class Product {
         this.updatedAt = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getProductId() {
+        return productId;
     }
 
     public String getName() {
