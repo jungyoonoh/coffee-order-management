@@ -111,7 +111,7 @@ public class ProductJdbcRepository implements ProductRepository {
     private Map<String, Object> toParamMap(Product product) {
         var paramMap = new HashMap<String, Object>();
         paramMap.put("productId", product.getProductId().toString().getBytes());
-        paramMap.put("productName", product.getName());
+        paramMap.put("productName", product.getProductName());
         paramMap.put("category", product.getCategory().toString());
         paramMap.put("price", product.getPrice());
         paramMap.put("description", product.getDescription());

@@ -86,7 +86,7 @@ class ProductJdbcRepositoryTest extends MySqlContainerInitializer {
         product.updateProductProperties("java-bean", product.getCategory(), product.getPrice(), product.getDescription());
         productRepository.update(product);
         var update = productRepository.findById(product.getProductId()).get();
-        assertThat(update.getName(), is("java-bean"));
+        assertThat(update.getProductName(), is("java-bean"));
     }
 
     @Test

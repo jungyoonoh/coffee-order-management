@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -38,7 +37,7 @@ public class OrderJdbcRepositoryTest extends MySqlContainerInitializer {
         var order = new Order(new Email("xkakak142@naver.com"),
                 "서울시 광진구 능동로 120",
                 "05029",
-                List.of(new OrderItem(coffeeBean.getProductId(), coffeeBean.getName(), coffeeBean.getCategory(), coffeeBean.getPrice(), 3)));
+                List.of(new OrderItem(coffeeBean.getProductId(), coffeeBean.getCategory(), coffeeBean.getPrice(), 3)));
 
         Order insert = orderRepository.insert(order);
         assertThat(order, samePropertyValuesAs(insert));
@@ -77,8 +76,8 @@ public class OrderJdbcRepositoryTest extends MySqlContainerInitializer {
         productRepository.insert(iceAmericano);
 
         List<OrderItem> items = new ArrayList<>();
-        var orderItem1 = new OrderItem(coffeeBean.getProductId(), coffeeBean.getName(), coffeeBean.getCategory(), coffeeBean.getPrice(), 3);
-        var orderItem2 = new OrderItem(iceAmericano.getProductId(), iceAmericano.getName(), iceAmericano.getCategory(), iceAmericano.getPrice(), 1);
+        var orderItem1 = new OrderItem(coffeeBean.getProductId(), coffeeBean.getCategory(), coffeeBean.getPrice(), 3);
+        var orderItem2 = new OrderItem(iceAmericano.getProductId(), iceAmericano.getCategory(), iceAmericano.getPrice(), 1);
         items.add(orderItem1);
         items.add(orderItem2);
 

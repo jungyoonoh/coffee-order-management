@@ -25,6 +25,6 @@ public class ProductServiceTest extends MySqlContainerInitializer {
     public void testUpdateProductById() {
         var product = productService.createProduct("coffee-bean", Category.COFFEE_BEAN, 5000, "산미 가득한 원두");
         var updated = productService.updateProductProperties(product.getProductId(), "java-bean", Category.COFFEE_BEAN, 5000, "산미 가득한 원두");
-        assertThat(updated.get().getName(), is("java-bean"));
+        assertThat(updated.get().getProductName(), is("java-bean"));
     }
 }

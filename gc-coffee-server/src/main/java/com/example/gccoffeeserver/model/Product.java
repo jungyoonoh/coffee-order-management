@@ -6,16 +6,16 @@ import java.util.UUID;
 
 public class Product {
     private final UUID productId;
-    private String name;
+    private String productName;
     private Category category;
     private long price;
     private String description;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product(UUID productId, String name, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(UUID productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productId = productId;
-        this.name = name;
+        this.productName = productName;
         this.category = category;
         this.price = price;
         this.description = description;
@@ -23,9 +23,9 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Product(String name, Category category, long price) {
+    public Product(String productName, Category category, long price) {
         this.productId = UUID.randomUUID();
-        this.name = name;
+        this.productName = productName;
         this.category = category;
         this.price = price;
         this.description = "";
@@ -33,9 +33,9 @@ public class Product {
         this.updatedAt = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
     }
 
-    public Product(String name, Category category, long price, String description) {
+    public Product(String productName, Category category, long price, String description) {
         this.productId = UUID.randomUUID();
-        this.name = name;
+        this.productName = productName;
         this.category = category;
         this.price = price;
         this.description = description;
@@ -47,8 +47,8 @@ public class Product {
         return productId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
     public Category getCategory() {
@@ -71,8 +71,8 @@ public class Product {
         return updatedAt;
     }
 
-    public void updateProductProperties(String name, Category category, long price, String description) {
-        this.name = name;
+    public void updateProductProperties(String productName, Category category, long price, String description) {
+        this.productName = productName;
         this.category = category;
         this.price = price;
         this.description = description;

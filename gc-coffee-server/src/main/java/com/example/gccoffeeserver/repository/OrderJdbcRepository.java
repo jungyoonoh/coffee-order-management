@@ -31,8 +31,8 @@ public class OrderJdbcRepository implements OrderRepository{
                 toOrderParamMap(order));
 
         order.getOrderItems().forEach(item -> {
-            jdbcTemplate.update("INSERT INTO order_items(order_id, product_id, product_name, category, price, quantity, created_at, updated_at) " +
-                            "VALUES (UUID_TO_BIN(:orderId), UUID_TO_BIN(:productId), :productName, :category, :price, :quantity, :createdAt, :updatedAt)",
+            jdbcTemplate.update("INSERT INTO order_items(order_id, product_id, category, price, quantity, created_at, updated_at) " +
+                            "VALUES (UUID_TO_BIN(:orderId), UUID_TO_BIN(:productId), :category, :price, :quantity, :createdAt, :updatedAt)",
                     toOrderItemParamMap(order.getOrderId(), order.getCreatedAt(), order.getUpdatedAt(), item));
         });
         return order;
@@ -71,7 +71,6 @@ public class OrderJdbcRepository implements OrderRepository{
         var paramMap = new HashMap<String, Object>();
         paramMap.put("orderId", orderId.toString().getBytes());
         paramMap.put("productId", item.productId().toString().getBytes());
-        paramMap.put("productName", item.productName());
         paramMap.put("category", item.category().toString());
         paramMap.put("price", item.price());
         paramMap.put("quantity", item.quantity());
@@ -92,14 +91,10 @@ public class OrderJdbcRepository implements OrderRepository{
     };
 
     private static final RowMapper<OrderItem> orderItemsRowMapper = (resultSet, i) -> {
-        var orderId = toUUID(resultSet.getBytes("order_id"));
         var productId = toUUID(resultSet.getBytes("product_id"));
-        var productName = resultSet.getString("product_name");
         var category = Category.valueOf(resultSet.getString("category"));
         var price = resultSet.getLong("price");
         var quantity = resultSet.getInt("quantity");
-        var createdAt = toLocalDateTime(resultSet.getTimestamp("created_at"));
-        var updatedAt = toLocalDateTime(resultSet.getTimestamp("updated_at"));
-        return new OrderItem(productId, productName, category, price, quantity);
+        return new OrderItem(productId, category, price, quantity);
     };
 }
