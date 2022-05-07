@@ -40,24 +40,13 @@ public class DefaultProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(String name, Category category, Long price, String description) {
+    public Product createProduct(String name, Category category, long price, String description) {
         return productRepository.insert(new Product(name, category, price, description));
     }
 
     @Override
     @Transactional
-    public Optional<Product> updateProductProperties(String name, Category category, Long price, String description) {
-        var product = productRepository.findByName(name);
-        if (product.isPresent()) {
-            product.get().updateProductProperties(name, category, price, description);
-            productRepository.update(product.get());
-            return product;
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Product> updateProductProperties(UUID id, String name, Category category, Long price, String description) {
+    public Optional<Product> updateProductProperties(UUID id, String name, Category category, long price, String description) {
         var product = productRepository.findById(id);
         if (product.isPresent()) {
             product.get().updateProductProperties(name, category, price, description);
@@ -70,5 +59,10 @@ public class DefaultProductService implements ProductService {
     @Override
     public void removeProductById(UUID id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public void removeAllProduct() {
+        productRepository.deleteAll();
     }
 }
