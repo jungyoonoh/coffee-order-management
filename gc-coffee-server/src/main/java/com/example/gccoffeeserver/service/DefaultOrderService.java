@@ -34,4 +34,9 @@ public class DefaultOrderService implements OrderService {
     public List<OrderItem> getOrderItemsByOrderId(UUID orderId) {
         return orderRepository.findOrderItemsByOrderId(orderId);
     }
+
+    @Override
+    public void removeAllOrder() {
+        orderRepository.deleteAllOrder();
+    }
 }

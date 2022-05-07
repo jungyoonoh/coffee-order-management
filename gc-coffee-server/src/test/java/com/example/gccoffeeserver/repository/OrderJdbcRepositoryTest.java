@@ -90,13 +90,6 @@ public class OrderJdbcRepositoryTest extends MySqlContainerInitializer {
         orderRepository.insert(order);
 
         var allItemsByOrder = orderRepository.findOrderItemsByOrderId(order.getOrderId());
-        for (OrderItem item : items) {
-            System.out.println("items.get(i) = " + item.toString());
-        }
-        System.out.println("allItemsByOrder.size() = " + allItemsByOrder.size());
-        for (OrderItem item : allItemsByOrder) {
-            System.out.println("allItemsByOrder.get(i) = " + item.toString());
-        }
         assertThat(allItemsByOrder, containsInAnyOrder(
                 samePropertyValuesAs(orderItem1),
                 samePropertyValuesAs(orderItem2)

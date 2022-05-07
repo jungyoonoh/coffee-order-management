@@ -14,4 +14,6 @@ public interface OrderService {
     List<Order> getAllOrders();
 
     List<OrderItem> getOrderItemsByOrderId(UUID orderId);
+
+    void removeAllOrder();
 }
