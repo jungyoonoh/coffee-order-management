@@ -19,8 +19,11 @@ public class OrderViewController {
 
     @GetMapping("/orders")
     public String ordersPage(Model model) {
-        var orders = orderService.getAllOrders();
-        model.addAttribute("orders", orders);
+        var orderDtoList =  orderService.getAllOrders()
+                .stream()
+                .map(OrderDto::from)
+                .toList();
+        model.addAttribute("orders", orderDtoList);
         return "order-list";
     }
 
