@@ -16,7 +16,7 @@ public class OrderRestController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/orders")
+    @PostMapping("/api/v1/orders")
     public ResponseEntity<Order> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
         var order = orderService.createOrder(new Email(createOrderRequest.email()),
                 createOrderRequest.address(),
