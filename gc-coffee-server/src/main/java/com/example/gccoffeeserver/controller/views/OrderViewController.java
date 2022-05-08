@@ -42,4 +42,10 @@ public class OrderViewController {
         orderService.removeAllOrder();
         return "redirect:/orders";
     }
+
+    @DeleteMapping("/orders/{id}")
+    public String deleteOrder(@PathVariable UUID id) {
+        orderService.removeOrderById(id);
+        return "redirect:/orders";
+    }
 }

@@ -62,6 +62,12 @@ public class OrderJdbcRepository implements OrderRepository{
         jdbcTemplate.update("DELETE FROM orders", Map.of());
     }
 
+    @Override
+    public void deleteOrderById(UUID orderId) {
+        jdbcTemplate.update("DELETE FROM orders where order_id = UUID_TO_BIN(:orderId)",
+                Map.of("orderId", orderId.toString().getBytes()));
+    }
+
     private Map<String, Object> toOrderParamMap(Order order) {
         var paramMap = new HashMap<String, Object>();
         paramMap.put("orderId", order.getOrderId().toString().getBytes());

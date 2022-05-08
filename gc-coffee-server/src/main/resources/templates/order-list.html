@@ -30,7 +30,7 @@
         <th scope="col">Postcode</th>
         <th scope="col">OrderStatus</th>
         <th scope="col">CreatedAt</th>
-        <th scope="col">UpdatedAt</th>
+        <th scope="col">Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -41,7 +41,14 @@
         <td th:text="*{postcode}"></td>
         <td th:text="*{orderStatus}"></td>
         <td th:text="*{createdAt}"></td>
-        <td th:text="*{updatedAt}"></td>
+        <td>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <form method="post" th:action="@{/orders/{orderId}(orderId=${order.orderId})}">
+                    <input name="_method" type="hidden" value="delete"/>
+                    <button class="btn btn-primary me-md-2" id="delete-each-btn">삭제</button>
+                </form>
+            </div>
+        </td>
     </tr>
     </tbody>
 </table>

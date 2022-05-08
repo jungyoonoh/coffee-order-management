@@ -17,4 +17,6 @@ public interface OrderRepository {
     Long getSumOfSales();
 
     void deleteAllOrder();
+
+    void deleteOrderById(UUID orderId);
 }

@@ -18,4 +18,6 @@ public interface OrderService {
     long getTotalIncome();
 
     void removeAllOrder();
+
+    void removeOrderById(UUID orderId);
 }
