@@ -37,7 +37,7 @@ public class ProductViewController {
 
     @PostMapping("/products")
     public String createProduct(CreateProductRequest createProductRequest) {
-        productService.createProduct(createProductRequest.name(),
+        productService.createProduct(createProductRequest.productName(),
                 createProductRequest.category(),
                 createProductRequest.price(),
                 createProductRequest.description());
@@ -54,7 +54,7 @@ public class ProductViewController {
     public String updateProduct(@PathVariable UUID id, CreateProductRequest createProductRequest){
         productService.updateProductProperties(
                 id,
-                createProductRequest.name(),
+                createProductRequest.productName(),
                 createProductRequest.category(),
                 createProductRequest.price(),
                 createProductRequest.description());

@@ -2,7 +2,6 @@ package com.example.gccoffeeserver.service;
 
 import com.example.gccoffeeserver.model.Category;
 import com.example.gccoffeeserver.model.Product;
-import com.example.gccoffeeserver.web.ResponseStatus;
 
 import java.util.List;
 import java.util.Optional;
