@@ -24,6 +24,9 @@ public class OrderViewController {
                 .map(OrderDto::from)
                 .toList();
         model.addAttribute("orders", orderDtoList);
+
+        var totalIncome = orderService.getTotalIncome();
+        model.addAttribute("totalIncome", totalIncome);
         return "order-list";
     }
 

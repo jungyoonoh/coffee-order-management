@@ -15,5 +15,7 @@ public interface OrderService {
 
     List<OrderItem> getOrderItemsByOrderId(UUID orderId);
 
+    long getTotalIncome();
+
     void removeAllOrder();
 }

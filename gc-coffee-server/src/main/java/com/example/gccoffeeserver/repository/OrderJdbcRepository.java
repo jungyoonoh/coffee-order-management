@@ -51,6 +51,13 @@ public class OrderJdbcRepository implements OrderRepository{
     }
 
     @Override
+    public Long getSumOfSales() {
+        return jdbcTemplate.queryForObject("select sum(price * quantity) from order_items",
+                Map.of(),
+                sumOfSalesMapper);
+    }
+
+    @Override
     public void deleteAllOrder() {
         jdbcTemplate.update("DELETE FROM orders", Map.of());
     }
@@ -97,4 +104,6 @@ public class OrderJdbcRepository implements OrderRepository{
         var quantity = resultSet.getInt("quantity");
         return new OrderItem(productId, category, price, quantity);
     };
+
+    private static final RowMapper<Long> sumOfSalesMapper = (resultSet, i) -> resultSet.getLong("sum(price * quantity)");
 }

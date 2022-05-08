@@ -36,6 +36,11 @@ public class DefaultOrderService implements OrderService {
     }
 
     @Override
+    public long getTotalIncome() {
+        return orderRepository.getSumOfSales();
+    }
+
+    @Override
     public void removeAllOrder() {
         orderRepository.deleteAllOrder();
     }
